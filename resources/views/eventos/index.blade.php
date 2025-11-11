@@ -29,7 +29,7 @@
                     <td>{{ optional($e->dataInicio)->format('d/m/Y H:i') }}</td>
                     <td>{{ optional($e->dataFim)->format('d/m/Y H:i') }}</td>
                     <td>{{ $e->local }}</td>
-                    <td>{{ $e->curso }}</td>
+                    <td>{{ $e->curso->nome ?? 'Sem curso' }}</td>
                     <td class="text-end">
                             <a class="btn btn-sm btn-outline-secondary" href="{{ route('eventos.edit', $e) }}">
                                 <i class="bi bi-pencil-square"></i> Editar

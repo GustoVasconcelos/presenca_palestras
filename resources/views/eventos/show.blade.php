@@ -18,7 +18,7 @@
                             <dt class="col-sm-3">Descrição</dt>
                             <dd class="col-sm-9">{{ $evento->descricao }}</dd>
                             <dt class="col-sm-3">Curso</dt>
-                            <dd class="col-sm-9">{{ $evento->curso }}</dd>
+                            <dd class="col-sm-9">{{ $evento->curso->nome }}</dd>
                         </dl>
                         <a class="btn btn-outline-secondary" href="{{ route('eventos.index') }}">
                             <i class="bi bi-arrow-left"></i>Voltar

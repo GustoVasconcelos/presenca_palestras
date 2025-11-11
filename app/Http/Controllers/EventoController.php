@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Evento;
+use App\Models\Curso;
 use Illuminate\Http\Request;
 
 class EventoController extends Controller
@@ -10,14 +11,17 @@ class EventoController extends Controller
     // Listar
     public function index()
     {
-        $eventos = Evento::orderBy('dataInicio', 'desc')->get();
+        /* $eventos = Evento::orderBy('dataInicio', 'desc')->get(); */
+        // Use ::with('curso') para carregar o relacionamento e evitar N+1 queries
+        $eventos = Evento::with('curso')->orderBy('dataInicio', 'desc')->get(); // <-- MUDANÇA AQUI
         return view('eventos.index', compact('eventos'));
     }
 
     // Criar Eventom (Form)
     public function create()
     {
-        return view('eventos.create');
+        $cursos = Curso::orderBy('nome')->get();
+        return view('eventos.create', compact('cursos'));
     }
 
     // Salvar evento no banco
@@ -29,7 +33,8 @@ class EventoController extends Controller
         'dataFim' => ['required', 'date'],
         'local' => ['required', 'min:2', 'max:255'],
         'descricao' => ['nullable', 'min:3'],
-        'curso' => ['nullable', 'min:3'],
+        // 'curso' => ['nullable', 'min:1'],
+        'curso_id' => ['nullable', 'exists:cursos,id'],
         ]);
         
         Evento::create($dados);
@@ -46,7 +51,8 @@ class EventoController extends Controller
     // Edita os detalhes de um evento
     public function edit(Evento $evento)
     {
-        return view('eventos.edit', compact('evento'));
+        $cursos = Curso::orderBy('nome')->get();
+        return view('eventos.edit', compact('evento', 'cursos'));
     }
 
     // Atualiza os dados do evento no banco
@@ -58,7 +64,8 @@ class EventoController extends Controller
         'dataFim' => ['required', 'date'],
         'local' => ['required', 'min:2', 'max:255'],
         'descricao' => ['nullable', 'min:3'],
-        'curso' => ['nullable', 'min:3'],
+        // 'curso' => ['nullable', 'min:1'],
+        'curso_id' => ['nullable', 'exists:cursos,id'],
         ]);
 
         $evento->update($dados);

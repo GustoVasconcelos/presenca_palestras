@@ -25,7 +25,18 @@
     @error('descricao') <div class="form-error">{{ $message }}</div> @enderror
 </div>
 <div class="mb-3">
-    <label class="form-label">Curso (Opcional)</label>
-    <input type="text" name="curso" class="form-control" value="{{ old('curso', $evento->curso ?? '') }}">
-    @error('curso') <div class="form-error">{{ $message }}</div> @enderror
+    <label class="form-label" for="curso_id">Curso (Opcional)</label>
+    <select class="form-select" name="curso_id" id="curso_id" aria-label="Cursos Disponíveis">
+        <option value="">Nenhum curso</option>
+        @foreach($cursos as $curso)
+            <option value="{{ $curso->id }}" 
+                @if(old('curso_id', $evento->curso_id ?? null) == $curso->id) 
+                    selected 
+                @endif
+            >
+                {{ $curso->nome }}
+            </option>
+        @endforeach
+    </select>
+    @error('curso_id') <div class="form-error">{{ $message }}</div> @enderror
 </div>
