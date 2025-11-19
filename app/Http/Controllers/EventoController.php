@@ -29,6 +29,7 @@ class EventoController extends Controller
     {
         $dados = $request->validate([
             'titulo'      => ['required', 'min:3', 'max:255'],
+            'banner' => ['nullable', 'url', 'max:255'],
             'dataInicio'  => ['required', 'date'],
             'dataFim'     => ['required', 'date', 'after_or_equal:dataInicio'],
             'local'       => ['required', 'min:2', 'max:255'],
@@ -59,6 +60,7 @@ class EventoController extends Controller
     {
         $dados = $request->validate([
             'titulo'      => ['required', 'min:3', 'max:255'],
+            'banner' => ['nullable', 'url', 'max:255'],
             'dataInicio'  => ['required', 'date'],
             'dataFim'     => ['required', 'date', 'after_or_equal:dataInicio'],
             'local'       => ['required', 'min:2', 'max:255'],

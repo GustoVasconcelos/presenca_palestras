@@ -5,6 +5,14 @@
     @error('titulo') <div class="form-error">{{ $message }}</div> @enderror
 </div>
 <div class="mb-3">
+    <label class="form-label">Banner do Evento (URL)</label>
+    <input type="url" name="banner" class="form-control" 
+           placeholder="https://exemplo.com/imagem.jpg"
+           value="{{ old('banner', $evento->banner ?? '') }}">
+    <div class="form-text">Cole aqui o link direto da imagem (Imgur, Google Drive, etc).</div>
+    @error('banner') <div class="form-error">{{ $message }}</div> @enderror
+</div>
+<div class="mb-3">
     <label class="form-label">Data de Início</label>
     <input type="datetime-local" name="dataInicio" class="form-control" value="{{ old('dataInicio', isset($evento) ? optional($evento->dataInicio)->format('Y-m-d\TH:i') : '') }}">
     @error('dataInicio') <div class="form-error">{{ $message }}</div> @enderror
