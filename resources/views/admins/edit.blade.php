@@ -1,37 +1,30 @@
-{{-- Desenvolvido pelos alunos: João Pedro e João Victor --}}
 @extends('layouts.app')
 
-@section('title', 'Editar Palestra')
+@section('title', 'Editar Admin')
 
 @section('content')
-<div class="row">
-    <div class="col-lg-8">
-
-        <div class="card">
-            <div class="card-header">Editar Palestra</div>
-
+<div class="row my-4">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header">Editar Administrador</div>
             <div class="card-body">
-                <form action="{{ route('palestras.update', $palestra) }}" method="POST" class="vstack gap-3">
+                <form action="{{ route('admins.update', $admin) }}" method="POST" class="vstack gap-3">
                     @csrf
                     @method('PUT')
 
-                    @include('palestras._form')
+                    @include('admins._form', ['admin' => $admin])
 
                     <div class="d-flex gap-2">
                         <button type="submit" class="btn btn-primary">
                             <i class="bi bi-check-circle"></i> Atualizar
                         </button>
-
-                        <a class="btn btn-outline-secondary" href="{{ route('palestras.index') }}">
+                        <a href="{{ route('admins.index') }}" class="btn btn-outline-secondary">
                             Cancelar
                         </a>
                     </div>
-
                 </form>
             </div>
-
         </div>
-
     </div>
 </div>
 @endsection

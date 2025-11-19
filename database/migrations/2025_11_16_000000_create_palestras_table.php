@@ -1,0 +1,40 @@
+<?php
+
+/**
+ * Desenvolvido pelos alunos: João Pedro e João Victor
+ * Disciplina: Programação Web - Fatec Prudente
+ */
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('palestras', function (Blueprint $table) {
+            $table->id();
+            $table->string('titulo');
+            $table->dateTime('data');
+            $table->string('local');
+            $table->text('descricao')->nullable();
+
+            $table->foreignId('palestrante_id')
+                  ->constrained('palestrantes')
+                  ->onDelete('restrict');
+
+            $table->foreignId('evento_id')
+                  ->nullable()
+                  ->constrained('eventos')
+                  ->onDelete('cascade');
+
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('palestras');
+    }
+};

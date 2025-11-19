@@ -31,13 +31,13 @@
                     <td>{{ $e->local }}</td>
                     <td>{{ $e->curso->nome ?? 'Sem curso' }}</td>
                     <td class="text-end">
-                            <a class="btn btn-sm btn-outline-secondary" href="{{ route('eventos.edit', $e) }}">
-                                <i class="bi bi-pencil-square"></i> Editar
-                            </a>
-                            <a class="btn btn-sm btn-outline-secondary" href="{{ route('eventos.show', $e) }}">
-                                <i class="bi bi-pencil-square"></i> Detalhes
-                            </a>
-                        <form action="{{ route('eventos.destroy', $e) }}" method="POST" class="d-inline" onsubmit="return confirm('Excluir esta palestra?');">
+                        <a class="btn btn-sm btn-outline-secondary" href="{{ route('eventos.edit', $e) }}">
+                            <i class="bi bi-pencil-square"></i> Editar
+                        </a>
+                        <a class="btn btn-sm btn-outline-secondary" href="{{ route('eventos.show', $e) }}">
+                            <i class="bi bi-eye"></i> Detalhes
+                        </a>
+                        <form action="{{ route('eventos.destroy', $e) }}" method="POST" class="d-inline" onsubmit="return confirm('Excluir este evento?');">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-sm btn-outline-danger" type="submit">
@@ -46,7 +46,7 @@
                         </form>
                     </td>
                 </tr>
-                @endforeach
+            @endforeach
             </tbody>
         </table>
     </div>

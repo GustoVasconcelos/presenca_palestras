@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Desenvolvido pelas alunas: Larissa e Stefany
+ * Disciplina: Programação Web - Fatec Prudente
+ */
+
 namespace App\Http\Controllers;
 
 use App\Models\Curso;
@@ -7,59 +12,71 @@ use Illuminate\Http\Request;
 
 class CursoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $cursos = Curso::orderBy('data_inicio', 'desc')->get();
+        return view('cursos.index', compact('cursos'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('cursos.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $dados = $request->validate([
+            'nome'         => ['required', 'string', 'max:255'],
+            'descricao'    => ['nullable', 'string', 'min:3'],
+            'carga_horaria'=> ['nullable', 'integer'],
+            'instrutor'    => ['nullable', 'string', 'min:2'],
+            'categoria'    => ['nullable', 'string', 'min:3'],
+            'data_inicio'  => ['nullable', 'date'],
+            'data_fim'     => ['nullable', 'date'],
+        ]);
+
+        Curso::create($dados);
+
+        return redirect()
+            ->route('cursos.index')
+            ->with('sucesso', 'Curso cadastrado com sucesso!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(Curso $curso)
     {
-        //
+        return view('cursos.show', compact('curso'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit(Curso $curso)
     {
-        //
+        return view('cursos.edit', compact('curso'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Curso $curso)
     {
-        //
+        $dados = $request->validate([
+            'nome'         => ['required', 'string', 'max:255'],
+            'descricao'    => ['nullable', 'string', 'min:3'],
+            'carga_horaria'=> ['nullable', 'integer'],
+            'instrutor'    => ['nullable', 'string', 'min:2'],
+            'categoria'    => ['nullable', 'string', 'min:3'],
+            'data_inicio'  => ['nullable', 'date'],
+            'data_fim'     => ['nullable', 'date'],
+        ]);
+
+        $curso->update($dados);
+
+        return redirect()
+            ->route('cursos.index')
+            ->with('sucesso', 'Curso atualizado com sucesso!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Curso $curso)
     {
-        //
+        $curso->delete();
+
+        return redirect()
+            ->route('cursos.index')
+            ->with('sucesso', 'Curso removido com sucesso!');
     }
 }

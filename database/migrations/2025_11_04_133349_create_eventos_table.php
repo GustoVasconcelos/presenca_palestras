@@ -1,32 +1,35 @@
 <?php
 
+/**
+ * Desenvolvido pelos alunos: Augusto e João
+ * Disciplina: Programação Web - Fatec Prudente
+ */
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('palestras', function (Blueprint $table) {
+        Schema::create('eventos', function (Blueprint $table) {
             $table->id();
             $table->string('titulo');
-            $table->string('palestrante');
-            $table->dateTime('data');
+            $table->dateTime('dataInicio');
+            $table->dateTime('dataFim');
             $table->string('local');
             $table->text('descricao')->nullable();
+            $table->foreignId('curso_id')
+                  ->nullable()
+                  ->constrained('cursos')
+                  ->onDelete('set null');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('palestras');
+        Schema::dropIfExists('eventos');
     }
 };
